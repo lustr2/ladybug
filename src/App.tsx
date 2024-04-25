@@ -1,17 +1,15 @@
-import React, { useState } from 'react';
-import { createRoot } from 'react-dom/client';
+import { useState } from 'react';
 import Ladybug from './components/Ladybug';
 import { Direction } from './components/Ladybug';
-import './style.css';
 
 const STEP_SIZE = 25;
 
-const App: React.FC = () => {
+export const App: React.FC = () => {
   const [posX, setPosX] = useState<number>(100);
   const [posY, setPosY] = useState<number>(100);
   const [orientation, setOrientation] = useState<Direction>(Direction.right);
 
-  const handleKeyUp = ({ code }) => {
+  const handleKeyUp = ({ code }:React.KeyboardEvent<HTMLDivElement>) => {
     if (code === 'ArrowUp') {
       setOrientation(Direction.up);
       setPosX(posX - STEP_SIZE);
@@ -39,6 +37,4 @@ const App: React.FC = () => {
   );
 };
 
-createRoot(
-  document.querySelector('#app'),
-).render(<App />);
+export default App;
