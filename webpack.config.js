@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   mode: 'development',
-  entry: './src/index.jsx',
+  entry: './src/index.tsx',
   devtool: 'eval-source-map',
   output: {
     filename: 'bundle-[contenthash:6].js',
@@ -16,7 +16,7 @@ module.exports = {
     hot: false,
   },
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
   },
   module: {
     rules: [
@@ -29,6 +29,10 @@ module.exports = {
             presets: ['@babel/preset-env', '@babel/preset-react'],
           },
         },
+      },
+      { 
+        test: /\.tsx?$/,
+        loader: 'ts-loader' 
       },
       {
         test: /\.css$/,
