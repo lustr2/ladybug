@@ -1,27 +1,30 @@
 import { useState } from 'react';
-import Ladybug from './components/Ladybug';
-import { Direction } from './components/Ladybug';
+import { Direction, Ladybug } from './components/Ladybug';
 
 const STEP_SIZE = 25;
 
+interface ILadybug {
+  posX: number;
+  posY: number;
+  orientation: Direction;
+}
+
 export const App: React.FC = () => {
-  const [posX, setPosX] = useState<number>(100);
-  const [posY, setPosY] = useState<number>(100);
-  const [orientation, setOrientation] = useState<Direction>(Direction.right);
+  const [ladyBug, setLadyBug] = useState<ILadybug>({
+    posX: 100, 
+    posY: 100, 
+    orientation: Direction.right
+  });
 
   const handleKeyUp = ({ code }:React.KeyboardEvent<HTMLDivElement>) => {
     if (code === 'ArrowUp') {
-      setOrientation(Direction.up);
-      setPosX(posX - STEP_SIZE);
+      setLadyBug({ ...ladyBug, posX : ladyBug.posX-STEP_SIZE, orientation: Direction.up});
     } else if (code === 'ArrowLeft') {
-      setOrientation(Direction.left);
-      setPosY(posY - STEP_SIZE);
+      setLadyBug({ ...ladyBug, posY : ladyBug.posY-STEP_SIZE, orientation: Direction.left});
     } else if (code === 'ArrowRight') {
-      setOrientation(Direction.right);
-      setPosY(posY + STEP_SIZE);
+      setLadyBug({ ...ladyBug, posY : ladyBug.posY+STEP_SIZE, orientation: Direction.right});
     } else if (code === 'ArrowDown') {
-      setOrientation(Direction.down);
-      setPosX(posX + STEP_SIZE);
+      setLadyBug({ ...ladyBug, posX : ladyBug.posX+STEP_SIZE, orientation: Direction.down});
     }
   };
 
@@ -32,7 +35,7 @@ export const App: React.FC = () => {
       onKeyDown={handleKeyUp}
     >
       <header>Click anywhere to start the game</header>
-      <Ladybug posX={posX} posY={posY} orientation={orientation} />
+      <Ladybug lb={ladyBug} />
     </div>
   );
 };
